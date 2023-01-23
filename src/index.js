@@ -4,11 +4,11 @@ import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-    {/* this is pulling and running the App funtion from App.js */}
-    {/* it's added to the 'root' div on index.html */}
-</React.StrictMode>
+    <React.StrictMode>
+        <App />
+        {/* ^^this is pulling and running the App funtion from App.js */}
+        {/* it's added to the 'root' div on index.html */}   
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
