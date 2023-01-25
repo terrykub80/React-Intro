@@ -16,6 +16,8 @@ function App(props) {
     const [myName, setMyaName] = useState('');
     const [myCity, setMyCity] = useState('');
     const [racers, setRacers] = useState([]);
+    const [season, setSeason] = useState("2022");
+    const [round, setRound] = useState("22");
         
     function handleClick(step){
         setCount(count + step)
@@ -26,17 +28,22 @@ function App(props) {
         setMyCity(usercity)
     };
 
+    function updateRacerStats(season, round){
+        setSeason(season);
+        setRound(round);
+    };
+
     // Create an effect 
     useEffect(() => {
         console.log('useEffect effect callback has been called')
-        fetch("http://ergast.com/api/f1/2022/5/driverStandings.json")
+        fetch(`http://ergast.com/api/f1/${season}/${round}/driverStandings.json`)
         .then(res => res.json())
         .then(data => {
             console.log(data)
             const racerStandings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
             setRacers(racerStandings);
         })
-    }, [])
+    }, [season, round]); // Will only re-run if season or round change values)
 
     return (
         <>
@@ -44,7 +51,7 @@ function App(props) {
             <div className="container">
                 <h1>Hello {myName}, Count: {count}</h1>
                 {buttons.map((button, idx) => <Button color={button.color} step={button.step} key={idx} handleClick={handleClick}/>)}
-                <RacerDisplay racers={racers}/>
+                <RacerDisplay racers={racers} updateRacerStats={updateRacerStats} />
             </div>           
         </>
         );
