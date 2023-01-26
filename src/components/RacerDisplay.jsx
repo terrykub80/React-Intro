@@ -1,53 +1,36 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import RacerForm from './RacerForm';
+import RacerTable from './RacerTable';
 
 export default function RacerDisplay(props) {
-    const tableHeaders = ['Position', 'Driver', 'Points', 'Wins', 'Nationality', 'Constructor']
 
-    const handleRacerChange = e => {
-        e.preventDefault();
-        let season = e.target.season.value;
-        let round = e.target.round.value;
-        props.updateRacerStats(season, round);
-        e.target.season.value = '';
-        e.target.round.value = ''
-    }
+    const [racers, setRacers] = useState([]);
+    const [season, setSeason] = useState("2022");
+    const [round, setRound] = useState("5");
+
+     // Function that will updated season and round with whatever numbers are passed into it
+     function updateRacerStats(season, round){
+        setSeason(season);
+        setRound(round);
+    };
+
+    // Create an effect -> function to execute after every render
+    useEffect(() => {
+        console.log('useEffect effect callback has been called');
+        fetch(`http://ergast.com/api/f1/${season}/${round}/driverStandings.json`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                const racerStandings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+                setRacers(racerStandings);
+            })
+    }, [season, round]); // Will only re-run if season or round change values
 
     return (
         <div>
-            <h1 className='text-center my-3'>F1 Racer Standings</h1>
-
-            <form action="" className="row my-3" onSubmit={handleRacerChange}>
-                <div className="col-12 col-md-5">
-                    <input type="text" name="season" placeholder="Enter Year" className='form-control'/>
-                </div>
-                <div className="col-12 col-md-5">
-                    <input type="text" name="round" placeholder="Enter Round" className='form-control' />
-                </div>
-                <div className="col">
-                    <input type="submit" className="btn btn-success w-100" value="Search" />
-                </div>
-            </form>
-
-        
-            <table className='table table-primary table-striped'>
-                <thead>
-                    <tr className='fst-italic fs-4'>
-                        {tableHeaders.map((th, i) => <th key={i}>{th}</th>)}
-                    </tr>
-                </thead>
-                <tbody>
-                    {props.racers.map( racer => (
-                        <tr key={racer.position}>
-                            <th>{racer.position}</th>
-                            <th>{racer.Driver.familyName}, {racer.Driver.givenName}</th>
-                            <th>{racer.points}</th>
-                            <th>{racer.wins}</th>
-                            <th>{racer.Driver.nationality}</th>
-                            <th>{racer.Constructors[0].name}</th>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <h1 className="text-center my-3">F1 Racer Standings</h1>
+            <RacerForm updateRacerStats={updateRacerStats} />
+            <RacerTable racers={racers} />
         </div>
     )
 }
