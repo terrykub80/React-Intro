@@ -9,7 +9,7 @@ export default class RacerDisplayClass extends Component{
         this.state = {
             racers: [],
             season: "2022",
-            round: "5"
+            round: "22"
         }
     }
 
