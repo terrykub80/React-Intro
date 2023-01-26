@@ -20,14 +20,14 @@ export default function Navbar(props) {
             <div className='container-fluid'>
                 {
                     props.city && props.name ?
-                    <Link className='navbar-brand' to="/">Welcome {props.name} from {props.city}</Link> :
-                    <Link className="navbar-brand" to='/'>Welcome Stranger</Link>
+                    <Link className='navbar-brand fw-bold' to="/">Welcome {props.name} from {props.city}</Link> :
+                    <Link className="navbar-brand fw-bold" to='/'>Welcome Stranger</Link>
                 }
                 
-                    <Link className='nav-link' to="/">Home</Link>
-                    <Link className='nav-link' to="/buttons">Buttons</Link>
-                    <Link className='nav-link' to="/standings">Standings</Link>
-                    <Link className='nav-link' to="/register">Register</Link>
+                    <Link className='nav-link fw-bold text-success' to="/">Home</Link>
+                    <Link className='nav-link fw-bold text-danger' to="/buttons">Buttons</Link>
+                    <Link className='nav-link fw-bold text-warning' to="/standings">Standings</Link>
+                    <Link className='nav-link fw-bold text-primary' to="/register">Register</Link>
                 
 
                 <form action="" className="row" onSubmit={handleForm}>
