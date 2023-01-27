@@ -1,13 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 
 export default class Register extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            redirect: false
+        }
+    }
 
     handleRegister = event => {
         event.preventDefault();
         
         let password = event.target.password.value;
         let confirmPass = event.target.confirmPass.value;
-        if (password != confirmPass){
+        if (password !== confirmPass){
             console.warn('Passwords do not match');
         } else {
             console.log('Passwords match')
@@ -34,6 +41,9 @@ export default class Register extends Component {
                         console.error(data.error)
                     } else {
                         console.log(data)
+                        this.setState({
+                            redirect: true
+                        })
                     }
                 })
         }
@@ -41,6 +51,8 @@ export default class Register extends Component {
     render() {
         return (
             <>
+                {this.state.redirect ? <Navigate to='/' /> :
+                <>
                 <h3 className='text-center'>Register</h3>
                 <form action='' onSubmit={this.handleRegister}>
                     <div className="form-group">
@@ -52,7 +64,10 @@ export default class Register extends Component {
                         <input type="submit" value="Register" className='btn btn-success w-100' />
                     </div>
                 </form>
+                </>
+                }
             </>
+            
         )
     }
 }
