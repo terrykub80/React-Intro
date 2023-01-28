@@ -25,10 +25,19 @@ export default function Navbar(props) {
                 }
                 
                     <Link className='nav-link fw-bold text-success' to="/">Home</Link>
-                    <Link className='nav-link fw-bold text-danger' to="/buttons">Buttons</Link>
-                    <Link className='nav-link fw-bold text-warning' to="/standings">Standings</Link>
-                    <Link className='nav-link fw-bold text-primary' to="/register">Register</Link>
-                    <Link className='nav-link fw-bold text-dark' to="/login">Log In</Link>
+                    {props.loggedIn ? (
+                        <>
+                        <Link className='nav-link fw-bold text-danger' to="/buttons">Buttons</Link>
+                        <Link className='nav-link fw-bold text-warning' to="/standings">Standings</Link>
+                        <Link className='nav-link fw-bold text-dark' to="/" onClick={props.logUserOut}>Log Out</Link>
+                        </>
+                    ) : (
+                        <>
+                        <Link className='nav-link fw-bold text-primary' to="/register">Register</Link>
+                        <Link className='nav-link fw-bold text-dark' to="/login">Log In</Link>
+                        </>
+                    )}
+
 
                 
 

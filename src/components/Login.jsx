@@ -23,7 +23,7 @@ export default function Login(props) {
             let data = await response.json();
             // Get the token and token expiration from the response
             let token = data.token;
-            let expiration = data.token.expiration;
+            let expiration = data.token_expiration;
 
             // Store the value in local storage on the browser
             localStorage.setItem('token', token);
@@ -31,6 +31,7 @@ export default function Login(props) {
 
             // FLash success message and redirect home
             props.flashMessage("You have successfully logged in.", 'success');
+            props.logUserIn();
             navigate('/');
 
         } else {
