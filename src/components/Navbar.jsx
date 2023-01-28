@@ -27,8 +27,9 @@ export default function Navbar(props) {
                     <Link className='nav-link fw-bold text-success' to="/">Home</Link>
                     {props.loggedIn ? (
                         <>
-                        <Link className='nav-link fw-bold text-danger' to="/buttons">Buttons</Link>
-                        <Link className='nav-link fw-bold text-warning' to="/standings">Standings</Link>
+                        <Link className='nav-link fw-bold text-primary' to="/buttons">Buttons</Link>
+                        <Link className='nav-link fw-bold text-primary' to="/standings">Standings</Link>
+                        <Link className='nav-link fw-bold text-primary' to="/create">Create Post</Link>
                         <Link className='nav-link fw-bold text-dark' to="/" onClick={props.logUserOut}>Log Out</Link>
                         </>
                     ) : (
